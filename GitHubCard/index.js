@@ -29,33 +29,35 @@
 
 const followersArray = [];
 
-axios.get('https://api.github.com/users/NaomiPriest97/followers')
-.then(response => {
-  console.log(response.data);
-  response.data.forEach(item => {
-    followersArray.push(item);
-  })
-  followersArray.forEach(item => {
-  entryPoint.appendChild(lambdaCard(item));
-  });
-});
-console.log(followersArray);
+
+//THIS WILL WORK BUT IT RETURNS THE INFO AS NULL
+// axios.get('https://api.github.com/users/NaomiPriest97/followers')
+// .then(response => {
+//   console.log(response.data);
+//   response.data.forEach(item => {
+//     followersArray.push(item);
+//   })
+//   followersArray.forEach(item => {
+//   entryPoint.appendChild(lambdaCard(item));
+//   });
+// });
+// console.log(followersArray);
 
 ///OR
 
-
-// axios.get('https://api.github.com/users/NaomiPriest97/followers')
-// .then(response => {
-//   Object(response.data).map(item => {
-//     axios.get(item.url)
-//     .then(response => {
-//       entryPoint.appendChild(lambdaCard(response.data));
-//     })
-//   })
-// })
-// .catch(error => {
-//   console.log('code isnt running', error);
-// })
+//WORKS ALL THE WAY
+axios.get('https://api.github.com/users/NaomiPriest97/followers')
+.then(response => {
+  Object(response.data).map(item => {
+    axios.get(item.url)
+    .then(response => {
+      entryPoint.appendChild(lambdaCard(response.data));
+    })
+  })
+})
+.catch(error => {
+  console.log('code isnt running', error);
+})
 
 
 // followersArray.forEach(item => {
