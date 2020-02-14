@@ -27,7 +27,46 @@
           user, and adding that card to the DOM.
 */
 
-//const followersArray = [];
+const followersArray = [];
+
+axios.get('https://api.github.com/users/NaomiPriest97/followers')
+.then(response => {
+  console.log(response.data);
+  response.data.forEach(item => {
+    followersArray.push(item);
+  })
+  followersArray.forEach(item => {
+  entryPoint.appendChild(lambdaCard(item));
+  });
+});
+console.log(followersArray);
+
+///OR
+
+
+// axios.get('https://api.github.com/users/NaomiPriest97/followers')
+// .then(response => {
+//   Object(response.data).map(item => {
+//     axios.get(item.url)
+//     .then(response => {
+//       entryPoint.appendChild(lambdaCard(response.data));
+//     })
+//   })
+// })
+// .catch(error => {
+//   console.log('code isnt running', error);
+// })
+
+
+// followersArray.forEach(item => {
+//   console.log(item);
+//   newCard.append(lambdaCard(item));
+// })
+
+
+
+
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -137,7 +176,6 @@ function lambdaCard(obj){
   cardInfo.appendChild(userName);
   cardInfo.appendChild(location);
   cardInfo.appendChild(profile);
-  
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
@@ -157,7 +195,8 @@ function lambdaCard(obj){
   followers.textContent = `Followers: ${obj.followers}`;
   following.textContent = `Following: ${obj.following}`;
   bio.textContent = `Bio: ${obj.bio}`;
-profile.appendChild(profileLink);
+
+  profile.appendChild(profileLink);
     
   return newCard;
 }
